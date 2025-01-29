@@ -1,0 +1,42 @@
+.popup-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  
+    &.selected {
+      background-color: #d0f0ff;
+      border-color: #007bff;
+    }
+  
+    &:hover {
+      background-color: #f9f9f9;
+    }
+  
+    input {
+      margin-right: 10px;
+    }
+  }
+  
+  .popup-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  

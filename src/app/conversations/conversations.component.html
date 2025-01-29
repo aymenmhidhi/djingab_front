@@ -1,0 +1,11 @@
+<p>conversations works!</p>
+<div *ngFor="let conversation of conversations">
+    {{conversation.id}}
+    <ul>
+        <li *ngFor="let message of conversation.content">
+          <strong>{{ message.content }}</strong>
+        </li>
+      </ul>  
+
+</div>
+  

@@ -1,0 +1,23 @@
+<div class="popup-container">
+    <h2>Sélectionnez des contacts</h2>
+    <div class="contact-list">
+      <div
+        class="contact-item"
+        *ngFor="let contact of contacts"
+        (click)="toggleSelection(contact.id)"
+        [class.selected]="selectedContacts.has(contact.id)"
+      >
+        <input
+          type="checkbox"
+          [checked]="selectedContacts.has(contact.id)"
+          (click)="$event.stopPropagation()"
+        />
+        {{ contact.name }}
+      </div>
+    </div>
+    <div class="popup-actions">
+      <button mat-button color="primary" (click)="validate()">Valider</button>
+      <button mat-button color="warn" (click)="close()">Annuler</button>
+    </div>
+  </div>
+  

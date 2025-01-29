@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+.my-background {
+    background-image: url(../public/walpaper2.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
