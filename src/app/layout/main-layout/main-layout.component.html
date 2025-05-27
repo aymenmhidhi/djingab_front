@@ -1,0 +1,25 @@
+<div class="my-background">
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="home-container">
+    <app-conversations></app-conversations>
+    <div class="messaging-layout">
+      <!-- Liste des conversations -->
+      <div class="conversation-list">
+        <app-conversations (conversationSelected)="onConversationSelected($event)"></app-conversations>
+      </div>
+
+      <!-- Fenêtre de chat (affichée seulement si une conversation est sélectionnée) -->
+      <div class="chat-window" *ngIf="selectedConversation">
+        <app-chat [conversation]="selectedConversation"></app-chat>
+      </div>
+
+      <!-- Bouton flottant pour ajouter une conversation -->
+      <button mat-fab color="primary" class="new-chat-btn" (click)="openPopup()">+</button>
+    </div>
+
+    <button mat-fab color="primary" (click)="openPopup()">+</button>
+  </div>
+</div>

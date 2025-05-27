@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import {ConversationsServiceService} from '../conversations/service/conversations-service.service'
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-conversations',
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
+  standalone: true,
   templateUrl: './conversations.component.html',
   styleUrl: './conversations.component.css',
   providers: [ConversationsServiceService]

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import {AuthService} from '../login/service/auth.service';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule,HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,HttpClientModule],
+  imports: [FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   providers: [AuthService]

@@ -8,9 +8,10 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './contact-popup.component.html',
   styleUrls: ['./contact-popup.component.css'],
+  providers: [ContactService]
 })
 export class ContactPopupComponent {
-  contacts: { id: number; name: string }[] = [];
+  contacts: { id: number; username: string }[] = [];
   selectedContacts: Set<number> = new Set();
 
   constructor(

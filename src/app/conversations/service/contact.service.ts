@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-  constructor() {}
+  url: string;
+  constructor(private httpClient: HttpClient) {
+    this.url = "http://localhost:8080/api/conversations/contacts";
+  }
 
   // Simule une API retournant une liste de contacts
-  getContacts(): Observable<{ id: number; name: string }[]> {
-    return of([
-      { id: 1, name: 'Alice' },
-      { id: 2, name: 'Bob' },
-      { id: 3, name: 'Charlie' },
-      { id: 4, name: 'Diana' },
-    ]);
+  getContacts(): Observable<any> {
+
+    const user = localStorage.getItem('user');
+    if (user != null) {
+      const userJson = JSON.parse(user)
+      let headers = new HttpHeaders();
+      headers = headers.set('Authorization', 'Bearer ' + userJson.token);
+      const params = new HttpParams()
+        .set('userId', userJson.id)
+      return this.httpClient.get(this.url, { headers, params });
+    }
+    else return of([]);;
   }
 }

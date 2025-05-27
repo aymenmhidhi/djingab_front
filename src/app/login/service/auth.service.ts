@@ -14,7 +14,8 @@ export class AuthService {
    }
   login(login:String,password:String){
     this.httpClient.post(this.url, {"username":login,"password":password}).subscribe((data: any) => {
-      localStorage.setItem('user',JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
+      this.router.navigate(['/']);
     },(error: any) => console.log('oops', error));
   } 
   logout(){
