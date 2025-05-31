@@ -1,22 +1,28 @@
-<div class="chat-container">
-  <div class="chat-header">
-    <h3>{{ conversation?.name || 'Conversation' }}</h3>
+<div class="chat-container d-flex flex-column p-3">
+  <!-- Header -->
+  <div class="chat-header mb-3 border-bottom pb-2">
+    <h5 class="m-0">{{ conversation?.contactName || 'Conversation' }}</h5>
   </div>
-  <h3>{{ conversation.contactName }}</h3>
-  <div class="chat-messages">
-    <div *ngFor="let message of messages" class="message">
-      <div class="sender">{{ message.sender }}</div>
-      <div class="content">{{ message.content }}</div>
+
+  <!-- Messages -->
+  <div class="chat-messages flex-grow-1 overflow-auto mb-3 px-2">
+    <div *ngFor="let message of messages" class="d-flex mb-2"
+         [ngClass]="{'justify-content-end': message.sender === 'me', 'justify-content-start': message.sender !== 'me'}">
+      <div class="message-bubble"
+           [ngClass]="{'bg-primary text-white': message.sender === 'me', 'bg-white text-dark': message.sender !== 'me'}">
+        {{ message.content }}
+      </div>
     </div>
   </div>
 
-  <!-- <div class="chat-input">
-     <input type="text"
-            [(ngModel)]="newMessage"
-            (keyup.enter)="sendMessage()"
-            placeholder="Écrire un message..." />
-     <button  (click)="sendMessage()">
-       send
-     </button>
-   </div>-->
+  <!-- Input zone -->
+  <div class="chat-input d-flex border-top pt-2">
+    <input type="text"
+           class="form-control me-2"
+           [(ngModel)]="newMessage"
+           placeholder="Écrire un message..." />
+    <button class="btn btn-primary" (click)="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
 </div>
