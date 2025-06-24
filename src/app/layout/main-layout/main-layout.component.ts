@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import { ConversationsComponent } from '../../conversations/conversations.component'
+import { ConversationsComponent } from '../../conversations/ConversationsComponent';
 import { ChatComponent } from '../../chat/chat.component'; 
 import { MatDialog } from '@angular/material/dialog';
 import { ContactPopupComponent } from '../../popup/contact-popup/contact-popup.component';
@@ -22,6 +22,17 @@ import { CommonModule } from '@angular/common';
 export class MainLayoutComponent {
   selectedConversation: any = null;
   constructor(private dialog: MatDialog) { }
+  selectConversation(conversation: any): void {
+    this.selectedConversation = null;
+    setTimeout(() => {
+      this.selectedConversation = conversation;
+    });
+  }
+  logout(): void {
+    localStorage.removeItem('user');
+    location.reload(); // ou navigate vers /login
+  }
+
   openPopup(): void {
     const dialogRef = this.dialog.open(ContactPopupComponent, {
       width: '400px',
@@ -31,11 +42,20 @@ export class MainLayoutComponent {
     dialogRef.afterClosed().subscribe((selectedContacts: any) => {
       if (selectedContacts) {
         console.log('Contacts sélectionnés :', selectedContacts);
-        this.selectedConversation = {
-          contactId: selectedContacts[0].id,
-          contactName: selectedContacts[0].username,
-          messages: [] // ou à remplir plus tard via service
-        };
+        if (selectedContacts.legnth() == 1) {
+          this.selectConversation({
+            contact: selectedContacts[0],
+            messages: [],
+            conversationType :'SINGLE'
+          })
+        }
+        else {
+          this.selectConversation({
+            contacts: selectedContacts,
+            messages: [],
+            conversationType: 'GROUP'
+          })
+        }
       }
     });
   }

@@ -7,9 +7,9 @@
   <!-- Messages -->
   <div class="chat-messages flex-grow-1 overflow-auto mb-3 px-2">
     <div *ngFor="let message of messages" class="d-flex mb-2"
-         [ngClass]="{'justify-content-end': message.sender === 'me', 'justify-content-start': message.sender !== 'me'}">
+         [ngClass]="{'justify-content-end': message.senderId === userId, 'justify-content-start': message.senderId !== userId}">
       <div class="message-bubble"
-           [ngClass]="{'bg-primary text-white': message.sender === 'me', 'bg-white text-dark': message.sender !== 'me'}">
+           [ngClass]="{'bg-primary text-white': message.senderId === userId, 'bg-white text-dark': message.senderId !== userId}">
         {{ message.content }}
       </div>
     </div>

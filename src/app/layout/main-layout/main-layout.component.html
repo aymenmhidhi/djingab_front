@@ -1,3 +1,21 @@
+
+<nav class="navbar navbar-light bg-light px-3 d-flex justify-content-between light-navbar">
+  <span class="navbar-brand mb-0 h1"> The Djin Gab </span>
+
+  <!-- Menu utilisateur -->
+  <div class="dropdown">
+    <button class="btn btn-light dropdown-toggle p-0 border-0" type="button" id="dropdownUser"
+            data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="djin.png" alt="avatar" class="rounded-circle" width="40" height="40">
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+      <li><a class="dropdown-item" href="#">Paramètres</a></li>
+      <li><a class="dropdown-item" href="#">Liste des contacts</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item text-danger" href="#" (click)="logout()">Déconnexion</a></li>
+    </ul>
+  </div>
+</nav>
 <div class="container-fluid my-background py-3">
   <div class="row">
     <!-- Colonne gauche : liste des conversations -->

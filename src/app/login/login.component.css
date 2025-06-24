@@ -4,9 +4,18 @@
 .h2 {
   margin-left: 35%;
 }
-.login-box {
+.inner {
   margin-left: 35%;
-  height: 60%;
+  height: 65%;
   width: 40%;
   background-image: url(../../../public/djin.png);
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centre horizontalement le contenu */
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
 }
+
+

@@ -41,3 +41,19 @@
   bottom: 20px;
   left: 20px;
 }
+.navbar img {
+  object-fit: cover;
+}
+.oriental-title {
+  font-size: 28px;
+  color: black;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #fff3cd;
+}
+
+.light-navbar {
+  background-color: #d6d8db; /* gris très clair */
+  border-bottom: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules,Routes,RouterModule } from '@angular/router';
 import {LoginComponent } from './login/login.component';
-import { ConversationsComponent } from './conversations/conversations.component';
+import { ConversationsComponent } from './conversations/ConversationsComponent';
 import { AuthGuard } from './auth.guard';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 

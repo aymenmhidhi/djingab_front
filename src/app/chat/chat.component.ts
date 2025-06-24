@@ -1,15 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WebSocketService } from './service/wbsocket.service'
-import { MessageService } from './service/message.service'
+import { WebSocketService } from '../../app/chat/service/wbsocket.service';
+import { MessageService } from './service/message.service';
 
 @Component({
   selector: 'app-chat',
-  imports: [
-    CommonModule, FormsModule
-    // autres modules...
-  ],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
   providers: [WebSocketService, MessageService]
@@ -17,37 +15,52 @@ import { MessageService } from './service/message.service'
 export class ChatComponent implements OnInit {
   @Input() conversation: any;
 
-  messages: { sender: string; content: string; timestamp: string }[] = [];
+  messages: { senderId: number; receiverId: number; content: string; timestamp: string }[] = [];
   newMessage: string = '';
-  constructor(private webSocketService: WebSocketService, private messageService: MessageService) { }
+  userId: number = 0;
+
+  constructor(
+    private webSocketService: WebSocketService,
+    private messageService: MessageService
+  ) { }
+
   ngOnInit(): void {
     if (this.conversation) {
-      // Ici tu devrais appeler le chatService pour charger les messages
-      this.messages = this.conversation.messages || []; // Exemple
+      this.messages = this.conversation.messages || [];
     }
+
     const user = localStorage.getItem('user');
     if (user != null) {
       const userJson = JSON.parse(user);
-      const userId = userJson['id'];
-      this.webSocketService.subscribeToMessages(userId);
-      this.webSocketService.getMessages().subscribe((msg) => {
-        this.messages.push(msg);
+      this.userId = userJson['id'];
+
+      // Connexion WebSocket
+      this.webSocketService.connect(() => {
+        // S'abonner au bon topic : /topic/chat/{userId}
+        const destination = `/topic/chat/${this.userId}`;
+        this.webSocketService.subscribe(destination, (msg) => {
+          this.messages.push(msg);
+        });
       });
     }
-     // ton propre système
-    
   }
 
   sendMessage(): void {
     if (!this.newMessage.trim()) return;
 
     const message = {
-      sender: 'Moi',
+      senderId: this.userId,
       content: this.newMessage,
+      receiverId: this.conversation.contactId,
       timestamp: new Date().toISOString()
     };
 
-    this.messageService.sendMessage(message);
+    // Envoie via REST API ou via WebSocket STOMP
+    this.messageService.sendMessage(message); // REST (optionnel)
+
+    // WebSocket STOMP (recommandé si temps réel)
+    this.webSocketService.sendMessage('/app/send-message', message);
+
     this.messages.push(message);
     this.newMessage = '';
   }

@@ -1,9 +1,9 @@
-<div *ngFor="let conversation of conversations">
-    {{conversation.id}}
-    <ul>
-        <li *ngFor="let message of conversation.content">
-          <strong>{{ message.content }}</strong>
-        </li>
-      </ul>  
+<div *ngFor="let conversation of conversations" (click)="selectConversation(conversation)">
+  {{conversation.from.username}}
 
+  <span *ngIf="conversation.content?.length">{{ conversation.content[0].content }}</span>
+
+  <span *ngIf="conversation.unreadCount > 0" class="notification-bubble">
+    {{ conversation.unreadCount }}
+  </span>
 </div>
