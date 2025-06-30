@@ -72,7 +72,7 @@ export class ConversationsComponent implements OnInit {
       // Conversation existe : ajoute le message à content (ou messages) et indique la notification
       if (!existingConversation.content) existingConversation.content = [];
       existingConversation.content.push(message);
-
+      existingConversation.conversationId = message.conversationId;
       // Ajouter un flag ou compteur pour notification, par ex :
       existingConversation.unreadCount = (existingConversation.unreadCount || 0) + 1;
 
@@ -83,6 +83,8 @@ export class ConversationsComponent implements OnInit {
         contactId: message.senderId,
         from: { id: message.senderId, username: message.senderUsername }, // adapte selon ton modèle
         messages: [message],
+        conversationId: message.conversationId,
+        conversationType:'SINGLE',
         unreadCount: 1
       };
       this.conversations.unshift(newConversation);

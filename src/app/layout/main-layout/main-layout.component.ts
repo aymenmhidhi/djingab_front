@@ -40,20 +40,26 @@ export class MainLayoutComponent {
     });
 
     dialogRef.afterClosed().subscribe((selectedContacts: any) => {
+      console.log('DEBUG:', selectedContacts, Array.isArray(selectedContacts));
       if (selectedContacts) {
         console.log('Contacts sélectionnés :', selectedContacts);
-        if (selectedContacts.legnth() == 1) {
+        if (selectedContacts.length === 1) {
           this.selectConversation({
             contact: selectedContacts[0],
+            contactId: selectedContacts[0].id,
+            contacts:[],
             messages: [],
-            conversationType :'SINGLE'
+            conversationType: 'SINGLE',
+            newConversation:true
           })
         }
         else {
           this.selectConversation({
             contacts: selectedContacts,
+            contact:null,
             messages: [],
-            conversationType: 'GROUP'
+            conversationType: 'GROUPE',
+            newConversation: true
           })
         }
       }
