@@ -67,5 +67,8 @@ export class MainLayoutComponent {
   }
   onConversationSelected(conversation: any) {
     this.selectedConversation = conversation;
+    this.selectedConversation.newConversation = false;
+    this.selectedConversation.conversationType = 'SINGLE';
+    conversation.hasUnread = false;
   }
 }

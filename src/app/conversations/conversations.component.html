@@ -1,6 +1,6 @@
 <div *ngFor="let conversation of conversations" (click)="selectConversation(conversation)">
   {{conversation.from.username}}
-
+  <span *ngIf="conversation.hasUnread" class="badge bg-danger">!</span>
   <span *ngIf="conversation.content?.length">{{ conversation.content[0].content }}</span>
 
   <span *ngIf="conversation.unreadCount > 0" class="notification-bubble">

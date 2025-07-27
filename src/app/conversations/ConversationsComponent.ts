@@ -62,11 +62,8 @@ export class ConversationsComponent implements OnInit {
     // ? Ajoute la conversation en haut si elle n’existe pas encore
   handleIncomingMessage(message: any): void {
     // Cherche la conversation existante avec le sender (message.senderId)
-    const existingConversation = this.conversations.find(conv => {
-      // Pour SingleConversation, tu peux matcher avec conv.from.id == senderId ou conv.contactId == senderId selon ta structure
-      // Ici j'imagine que tu as une propriété 'contactId' dans ta conversation comme dans l'exemple précédent
-      return conv.contactId === message.senderId;
-    });
+    const existingConversation  = this.conversations.find(conv => conv.id === message.conversationId);
+
 
     if (existingConversation) {
       // Conversation existe : ajoute le message à content (ou messages) et indique la notification
@@ -88,6 +85,12 @@ export class ConversationsComponent implements OnInit {
         unreadCount: 1
       };
       this.conversations.unshift(newConversation);
+    }
+  }
+  notifyUser(conversationId: number): void {
+    const conv = this.conversations.find(c => c.id === conversationId);
+    if (conv) {
+      conv.hasUnread = true;
     }
   }
 
