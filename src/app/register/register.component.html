@@ -1,1 +1,24 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <input formControlName="firstName" placeholder="Prénom" />
+  <div *ngIf="submitted && registerForm.get('firstName')?.invalid">Prénom requis</div>
+
+  <input formControlName="lastName" placeholder="Nom" />
+  <div *ngIf="submitted && registerForm.get('lastName')?.invalid">Nom requis</div>
+
+  <input formControlName="username" placeholder="Username" />
+  <div *ngIf="submitted && registerForm.get('username')?.invalid">Username requis</div>
+
+  <input formControlName="email" placeholder="Email" />
+  <div *ngIf="submitted && registerForm.get('email')?.invalid">Email invalide</div>
+
+  <input type="password" formControlName="password" placeholder="Mot de passe" />
+  <div *ngIf="submitted && registerForm.get('password')?.invalid">Mot de passe invalide</div>
+
+  <input formControlName="cellPhone" placeholder="Téléphone" />
+  <div *ngIf="submitted && registerForm.get('cellPhone')?.invalid">Téléphone invalide</div>
+
+  <button type="submit">S'inscrire</button>
+
+  <p>{{ message }}</p>
+</form>
+

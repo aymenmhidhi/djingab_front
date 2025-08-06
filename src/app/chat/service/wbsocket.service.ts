@@ -2,13 +2,17 @@
 import { Injectable } from '@angular/core';
 import { Client, IMessage, StompSubscription } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
   private client: Client;
+  private connected = false;
   private subscriptions: Map<string, StompSubscription> = new Map();
+
+  public incomingMessage$ = new Subject<any>(); // ← Flux partagé
 
   constructor() {
     this.client = new Client({
@@ -18,8 +22,19 @@ export class WebSocketService {
     });
   }
 
+  isConnected(): boolean {
+    return this.connected;
+  }
+
   connect(onConnected: () => void = () => { }): void {
+    if (this.connected) {
+      console.log('✅ Déjà connecté au WebSocket.');
+      onConnected();
+      return;
+    }
+
     this.client.onConnect = () => {
+      this.connected = true;
       console.log('✅ WebSocket connecté via STOMP');
       onConnected();
     };
@@ -38,7 +53,7 @@ export class WebSocketService {
         body: JSON.stringify(message),
       });
     } else {
-      console.error('WebSocket non connecté.');
+      console.error('🚫 WebSocket non connecté.');
     }
   }
 
@@ -47,10 +62,12 @@ export class WebSocketService {
 
     const subscription = this.client.subscribe(destination, (message: IMessage) => {
       const body = JSON.parse(message.body);
-      callback(body);
+      this.incomingMessage$.next(body); // ← envoie dans le flux partagé
+      callback(body); // si besoin
     });
 
     this.subscriptions.set(destination, subscription);
+    console.log(`📡 Abonné à ${destination}`);
   }
 
   unsubscribe(destination: string): void {
@@ -63,6 +80,7 @@ export class WebSocketService {
 
   disconnect(): void {
     this.client.deactivate();
+    this.connected = false;
     this.subscriptions.clear();
   }
 }
